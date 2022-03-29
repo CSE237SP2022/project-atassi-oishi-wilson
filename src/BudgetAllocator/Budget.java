@@ -69,20 +69,17 @@ public class Budget {
 	}
 
 	public BudgetItem getExpendableItem() {
-		if(items.size() == 0) {
+		ArrayList<BudgetItem> lowPrioItems = this.getExpendableItems();
+
+		if(lowPrioItems.size() == 0) {
 			return null;
 		}
-		BudgetItem worstItem = items.get(0);
+		BudgetItem worstItem = lowPrioItems.get(0);
 		BudgetItem iterItem;
-		for (int i = 0; i < items.size(); i++) {
-			iterItem = items.get(i);
-			if(iterItem.getPriority() > (worstItem.getPriority())) {
+		for (int i = 0; i < lowPrioItems.size(); i++) {
+			iterItem = lowPrioItems.get(i);
+			if(iterItem.getValue() > worstItem.getValue()) {
 				worstItem = iterItem;
-			}
-			if(iterItem.getPriority() == (worstItem.getPriority())) {
-				if(iterItem.getValue() > worstItem.getValue()) {
-					worstItem = iterItem;
-				}
 			}
 			
 		}
