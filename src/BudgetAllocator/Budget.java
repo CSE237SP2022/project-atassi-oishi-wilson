@@ -67,4 +67,46 @@ public class Budget {
 		}
 		return false;
 	}
+
+	public BudgetItem getExpendableItem() {
+		if(items.size() == 0) {
+			return null;
+		}
+		BudgetItem worstItem = items.get(0);
+		BudgetItem iterItem;
+		for (int i = 0; i < items.size(); i++) {
+			iterItem = items.get(i);
+			if(iterItem.getPriority() > (worstItem.getPriority())) {
+				worstItem = iterItem;
+			}
+			if(iterItem.getPriority() == (worstItem.getPriority())) {
+				if(iterItem.getValue() > worstItem.getValue()) {
+					worstItem = iterItem;
+				}
+			}
+			
+		}
+		return worstItem;
+	}
+
+	public ArrayList<BudgetItem> getExpendableItems() {
+		ArrayList<BudgetItem> lowPrioItems = new ArrayList<BudgetItem>();
+		BudgetItem iterItem;
+		int lowestPriority = -1;
+		for (int i = 0; i < items.size(); i++) {
+			iterItem = items.get(i);
+			if(iterItem.getPriority() > lowestPriority) {
+				lowestPriority = iterItem.getPriority();
+				lowPrioItems.clear();
+				lowPrioItems.add(iterItem);
+			}
+			else if(iterItem.getPriority() == lowestPriority) {
+				lowPrioItems.add(iterItem);
+			}
+			
+		}
+		return lowPrioItems;
+	}
+	
+	
 }
