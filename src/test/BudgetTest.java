@@ -73,4 +73,19 @@ public class BudgetTest {
 		budget1.addItem(item2);
 		assertEquals(10, budget1.getTotalCost(), .05);
 	}
+	
+	@Test
+	void testRemoveItem() {
+		Budget budget1 = new Budget("Budget1", 100.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		budget1.addItem(item1);
+		assertTrue(budget1.removeItem(item1));
+	}
+	
+	@Test
+	void testRemoveFakeItem() {
+		Budget budget1 = new Budget("Budget1", 100.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		assertFalse(budget1.removeItem(item1));
+	}
 }

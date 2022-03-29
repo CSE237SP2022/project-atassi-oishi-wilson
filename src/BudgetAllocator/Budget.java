@@ -1,12 +1,14 @@
 package BudgetAllocator;
 
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 
 public class Budget {
 
 	private String budgetName;
 	private double budgetValue;
 	private ArrayList<BudgetItem> items = new ArrayList<BudgetItem>();
+	private double totalCost = 0;
 	
 	public Budget(String name, double value) {
 		budgetName = name;
@@ -21,15 +23,20 @@ public class Budget {
 		return budgetValue;
 	}
 	
+	public double getTotalCost() {
+		return totalCost;
+	}
+	
 	public boolean addItem(BudgetItem item) {
 		if(this.checkForDuplicates(item)) {
 			return false;
 		}
 		items.add(item);
+		totalCost = calcTotalCost();
 		return true;
 	}
 	
-	public double getTotalCost() {
+	public double calcTotalCost() {
 		double totalValue = 0;
 		for (int i = 0; i < items.size(); i++) {
 			totalValue += items.get(i).getValue();
@@ -38,12 +45,23 @@ public class Budget {
 	}
 	
 	public double getRemainingValue() {
-		return budgetValue - this.getTotalCost();
+		return budgetValue - totalCost;
 	}
 	
 	public boolean checkForDuplicates(BudgetItem item) {
 		for (int i = 0; i < items.size(); i++) {
 			if(items.get(i).equals(item)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean removeItem(BudgetItem item) {
+		for (int i = 0; i < items.size(); i++) {
+			if(items.get(i).equals(item)) {
+				items.remove(i);
+				totalCost = calcTotalCost();
 				return true;
 			}
 		}
