@@ -27,4 +27,11 @@ public class BudgetItem {
 	public void setPriority(int i) {
 		itemPriority = i;
 	}
+	
+	public boolean equals(BudgetItem otherItem) {
+		if (itemName == otherItem.getName() && itemValue == otherItem.getValue() && itemPriority == otherItem.getPriority()) {
+			return true;
+		}
+		return false;
+	}
 }

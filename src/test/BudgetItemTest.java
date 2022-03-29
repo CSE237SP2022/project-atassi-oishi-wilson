@@ -37,5 +37,11 @@ public class BudgetItemTest {
 			assertTrue(1 == item.getPriority());
 		}
 		
+		@Test
+		void testEquals() {
+			BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00);
+			assertTrue(item.equals(item2));
+		}
+		
 		
 }

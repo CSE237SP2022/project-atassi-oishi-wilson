@@ -21,8 +21,12 @@ public class Budget {
 		return budgetValue;
 	}
 	
-	public void addItem(BudgetItem item) {
+	public boolean addItem(BudgetItem item) {
+		if(this.checkForDuplicates(item)) {
+			return false;
+		}
 		items.add(item);
+		return true;
 	}
 	
 	public double getTotalCost() {
@@ -35,5 +39,14 @@ public class Budget {
 	
 	public double getRemainingValue() {
 		return budgetValue - this.getTotalCost();
+	}
+	
+	public boolean checkForDuplicates(BudgetItem item) {
+		for (int i = 0; i < items.size(); i++) {
+			if(items.get(i).equals(item)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
