@@ -4,11 +4,13 @@ public class BudgetItem {
 
 	private String itemName;
 	private double itemValue;
+	private double itemCostOverTime;
 	private int itemPriority;
 	
 	public BudgetItem(String name, double value) {
 		itemName = name;
 		itemValue = value;
+		itemCostOverTime = 0;
 		itemPriority = 0;
 	}
 	
@@ -18,6 +20,14 @@ public class BudgetItem {
 	
 	public double getValue() {
 		return itemValue;
+	}
+	
+	public double getItemCostOverTime() {
+		return itemCostOverTime;
+	}
+	
+	public void updateCostOverTime() {
+		itemCostOverTime += itemValue;
 	}
 
 	public int getPriority() {
