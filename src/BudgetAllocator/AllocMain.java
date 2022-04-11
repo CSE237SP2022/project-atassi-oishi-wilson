@@ -11,8 +11,8 @@ public class AllocMain {
 
 		Scanner textScanner = new Scanner(System.in);
 
-		System.out.println("Please input your exactnCSV file name that is in this directory: ");
-		Scanner CSVParser;
+		System.out.println("Please input your exact txt file name that is in this directory: ");
+		Scanner txtParser;
 		int whichLine = 0;
 		int monthDuration = 0;
 		String name = "";
@@ -22,17 +22,17 @@ public class AllocMain {
 		ArrayList<Double> itemCosts = new ArrayList<Double>();
 		String fileName = textScanner.nextLine();
 		try {
-			CSVParser = new Scanner(new File("F:\\" + fileName + ".csv"));
+			txtParser = new Scanner(new File("F:\\" + fileName + ".txt"));
 			correctFile = true;
-			CSVParser.useDelimiter(",");
-			while(CSVParser.hasNext()) {
+			//CSVParser.useDelimiter(",");
+			while(txtParser.hasNext()) {
 				switch(whichLine) {
 					case 1: whichLine = 0;
-						monthDuration = CSVParser.nextInt();
+						monthDuration = txtParser.nextInt();
 						whichLine++;
 						break;
 					case 2: whichLine = 1;
-						String thisString = CSVParser.nextLine();						
+						String thisString = txtParser.nextLine();						
 					    Scanner sc = new Scanner(thisString);
 					    name = sc.next();
 					    initialSavings = Double.parseDouble(sc.next());
@@ -40,7 +40,7 @@ public class AllocMain {
 					    whichLine++;
 					    break;
 					case 3: whichLine = 2;
-						String thisBudgetItem = CSVParser.nextLine();						
+						String thisBudgetItem = txtParser.nextLine();						
 						Scanner sc2 = new Scanner(thisBudgetItem);
 						String itemName = sc2.next();
 						double value = Double.parseDouble(sc2.next());
@@ -49,11 +49,10 @@ public class AllocMain {
 						break;
 				}
 			}
-			CSVParser.close();
+			txtParser.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found, please enter again.");
 		}
-		x
 		Budget budget = new Budget(name, initialSavings, monthDuration, income);
 		for(int i = 0; i < itemNames.size(); i++) {
 			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i)));
