@@ -8,7 +8,7 @@ public class AllocMain {
 
 	public static void main(String[] args) {
 		boolean correctFile = false;
-
+		
 		Scanner textScanner = new Scanner(System.in);
 
 		System.out.println("Please input your exact txt file name that is in this directory: ");
