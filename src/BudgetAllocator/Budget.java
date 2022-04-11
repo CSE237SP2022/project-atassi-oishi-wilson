@@ -9,14 +9,22 @@ public class Budget {
 	private double budgetValue;
 	private ArrayList<BudgetItem> items = new ArrayList<BudgetItem>();
 	private double totalCost = 0;
+	private int months;
+	private double income;
 	
-	public Budget(String name, double value) {
+	public Budget(String name, double value, int months, double income) {
 		budgetName = name;
-		budgetValue = value;	
+		budgetValue = value;
+		this.months = months;
+		this.income = income;
 	}
 
 	public String getName() {
 		return budgetName;
+	}
+	
+	public int getMonths() {
+		return months;
 	}
 	
 	public double getValue() {
@@ -105,5 +113,8 @@ public class Budget {
 		return lowPrioItems;
 	}
 	
+	public void addSalary() {
+		budgetValue += income;
+	}
 	
 }
