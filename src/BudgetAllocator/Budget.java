@@ -8,7 +8,7 @@ public class Budget {
 	private String budgetName;
 	private double budgetValue;
 	private ArrayList<BudgetItem> items = new ArrayList<BudgetItem>();
-	private double totalCost = 0;
+	private double totalCost;
 	private int months;
 	private double income;
 	
@@ -17,6 +17,7 @@ public class Budget {
 		budgetValue = value;
 		this.months = months;
 		this.income = income;
+		totalCost = 0;
 	}
 
 	public String getName() {
@@ -39,8 +40,8 @@ public class Budget {
 		return totalCost;
 	}
 	
-	public void setIncome(double income) {
-		this.income = income;
+	public void updateIncome(double income) {
+		this.income += income;
 	}
 	
 	public boolean addItem(BudgetItem item) {
@@ -55,9 +56,21 @@ public class Budget {
 	public double calcTotalCost() {
 		double totalValue = 0;
 		for (int i = 0; i < items.size(); i++) {
-			totalValue += items.get(i).getValue();
+			if(!items.get(i).isIncomeItem()) {
+				totalValue += items.get(i).getValue();
+			}
 		}
 		return totalValue;
+	}
+	
+	public double calcTotalIncome() {
+		double totalIncome = income;
+		for (int i = 0; i < items.size(); i++) {
+			if(items.get(i).isIncomeItem()) {
+				totalIncome += items.get(i).getValue();
+			}
+		}
+		return totalIncome;
 	}
 	
 	public double getRemainingValue() {
@@ -121,8 +134,13 @@ public class Budget {
 		return lowPrioItems;
 	}
 	
-	public void addSalary() {
+	public void addIncometoBudgetValue() {
 		budgetValue += income;
+		for(int i = 0; i < items.size(); i++) {
+			if(items.get(i).isIncomeItem()) {
+				budgetValue += items.get(i).getValue();
+			}
+		}
 	}
 	
 }

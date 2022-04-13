@@ -24,6 +24,10 @@ public class IncomeItem extends BudgetItem {
 		return itemCostOverTime;
 	}
 	
+	public boolean isIncomeItem() {
+		return true;
+	}
+	
 	public void updateCostOverTime() {
 		itemCostOverTime += itemValue;
 	}
