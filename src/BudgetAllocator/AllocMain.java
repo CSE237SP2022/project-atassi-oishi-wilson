@@ -21,6 +21,16 @@ public class AllocMain {
 		return budget.addItem(new IncomeItem(newItemName, newItemCost));
 	}
 	
+	public static boolean removeItem(Budget budget, Scanner textScanner) {
+		System.out.println("Please list name of item to remove: ");
+		String removedName = textScanner.nextLine();
+		boolean result = budget.removeByName(removedName);
+		if(!result) {
+			System.out.println("No budget item with that name was located in list, please select option to try again.");
+		}
+		return result;
+	}
+	
 	public static void main(String[] args) {
 		boolean correctFile = false;
 
@@ -97,19 +107,7 @@ public class AllocMain {
 						addBudgetItem(budget, textScanner);
 					}
 				} else if (choice == 2) { //remove item
-					System.out.println("Please list name of item to remove: ");
-					String removedName = textScanner.nextLine();
-					ArrayList<BudgetItem> items = budget.getItems();
-					boolean isInList = false;
-					for(int k = 0; k < items.size(); k++) {
-						if(items.get(k).getName().equals(removedName)) {
-							isInList = true;
-							items.remove(k);
-						}
-					}
-					if(!isInList) {
-						System.out.println("No budget item with that name was located in list, please select option to try again.");
-					}
+					removeItem(budget, textScanner);
 				} else { //proceed to next month and print current
 					donePicking = true;
 					System.out.println("------------------------Month " + (i + 1) + "------------------------");
