@@ -27,12 +27,20 @@ public class Budget {
 		return months;
 	}
 	
+	public ArrayList<BudgetItem> getItems(){
+		return items;
+	}
+	
 	public double getValue() {
 		return budgetValue;
 	}
 	
 	public double getTotalCost() {
 		return totalCost;
+	}
+	
+	public void setIncome(double income) {
+		this.income = income;
 	}
 	
 	public boolean addItem(BudgetItem item) {
