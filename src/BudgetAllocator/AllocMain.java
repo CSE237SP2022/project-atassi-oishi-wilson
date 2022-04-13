@@ -97,7 +97,7 @@ public class AllocMain {
 							items.remove(k);
 						}
 					}
-					if(!isInList) {
+					if(!isInList)  {
 						System.out.println("No budget item with that name was located in list, please select option to try again.");
 					}
 				} else { //proceed to next month and print current
