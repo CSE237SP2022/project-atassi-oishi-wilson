@@ -22,6 +22,10 @@ public class BudgetItem {
 		return itemValue;
 	}
 	
+	public boolean isIncomeItem() {
+		return false;
+	}
+	
 	public double getItemCostOverTime() {
 		return itemCostOverTime;
 	}

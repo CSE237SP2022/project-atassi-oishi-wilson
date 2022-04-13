@@ -20,32 +20,28 @@ public class AllocMain {
 		ArrayList<String> itemNames = new ArrayList<String>();
 		ArrayList<Double> itemCosts = new ArrayList<Double>();
 		String fileName = textScanner.nextLine();
+		//System.out.println(fileName+".txt");
 		try {
-			txtParser = new Scanner(new File("F:\\" + fileName + ".txt"));
+			File directory = new File("./" + fileName + ".txt");
+			//txtParser = new Scanner(new File("/Users/ferrisatassi/Desktop/project-atassi-oishi-wilson/src/BudgetAllocator/TestFile.txt"));
+			txtParser = new Scanner(directory);
 			correctFile = true;
 			// CSVParser.useDelimiter(",");
 			while (txtParser.hasNext()) {
 				switch (whichLine) {
-				case 1:
-					whichLine = 0;
+				case 0:
 					monthDuration = txtParser.nextInt();
 					whichLine++;
 					break;
-				case 2:
-					whichLine = 1;
-					String thisString = txtParser.nextLine();
-					Scanner sc = new Scanner(thisString);
-					name = sc.next();
-					initialSavings = Double.parseDouble(sc.next());
-					income = Double.parseDouble(sc.next());
+				case 1:
+					name = txtParser.next();
+					initialSavings = Double.parseDouble(txtParser.next());
+					income = Double.parseDouble(txtParser.next());
 					whichLine++;
 					break;
-				case 3:
-					whichLine = 2;
-					String thisBudgetItem = txtParser.nextLine();
-					Scanner sc2 = new Scanner(thisBudgetItem);
-					String itemName = sc2.next();
-					double value = Double.parseDouble(sc2.next());
+				case 2:
+					String itemName = txtParser.next();
+					double value = Double.parseDouble(txtParser.next());
 					itemNames.add(itemName);
 					itemCosts.add(value);
 					break;
@@ -62,11 +58,11 @@ public class AllocMain {
 		
 		boolean donePicking = false;
 		for (int i = 0; i < monthDuration; i++) {
+			donePicking = false;
 			while (!donePicking) {
 				System.out.println("Would you like to add a budget item or income source? Select 1");
 				System.out.println("Would you like to remove a budget item? Select 2");
-				System.out.println("Would you like to update your entered income? Select 3");
-				System.out.println("Would you like to proceed to next month? Select 4");
+				System.out.println("Would you like to proceed to next month? Select 3");
 				int choice = textScanner.nextInt();
 				if (!(choice >= 1 && choice <= 4)) {
 					System.out.println("Invalid Choice: Please enter again.");
@@ -77,7 +73,7 @@ public class AllocMain {
 						System.out.println("Please enter either 'i' for income item or 'b' for budget item");
 						incomeOrBudget = textScanner.next().charAt(0);
 					}
-					if(incomeOrBudget == 'i') {
+					if(incomeOrBudget == 'i') { //choice between income or budget
 						System.out.println("Please Input name of income Item: ");
 						String newItemName = textScanner.nextLine();
 						System.out.println("Please input monthly wage of income item: ");
@@ -90,8 +86,8 @@ public class AllocMain {
 						double newItemCost = textScanner.nextInt();
 						budget.addItem(new BudgetItem(newItemName, newItemCost));
 					}
-				} else if (choice == 2) { //remove budget item
-					System.out.println("Please list name of budget item to remove: ");
+				} else if (choice == 2) { //remove item
+					System.out.println("Please list name of item to remove: ");
 					String removedName = textScanner.nextLine();
 					ArrayList<BudgetItem> items = budget.getItems();
 					boolean isInList = false;
@@ -104,13 +100,24 @@ public class AllocMain {
 					if(!isInList) {
 						System.out.println("No budget item with that name was located in list, please select option to try again.");
 					}
-				} else if (choice == 3) { //update income
-						System.out.println("What is your new monthly income?");
-						double newIncome = textScanner.nextInt();
-						budget.setIncome(newIncome);
-
-				} else { //proceed to next month
+				} else { //proceed to next month and print current
 					donePicking = true;
+					System.out.println("------------------------Month " + (i + 1) + "------------------------");
+					for(int j = 0; j < budget.getItems().size(); j++) {
+						budget.getItems().get(j).updateCostOverTime();
+						if(!budget.getItems().get(j).isIncomeItem()){
+							System.out.println("Budget Item:   " + budget.getItems().get(j).getName() + ": Cost = " + budget.getItems().get(j).getValue() + "   "
+									+ "Total Cost from This: " + (budget.getItems().get(j).getItemCostOverTime()));
+						} else {
+							System.out.println("Income Item:   " + budget.getItems().get(j).getName() + ": Cost = " + budget.getItems().get(j).getValue() + "   "
+									+ "Total Income from This: " + (budget.getItems().get(j).getItemCostOverTime()));
+						}
+					} 
+					System.out.println("Total Budget Cost this Month: " + budget.calcTotalCost());
+					System.out.println("Total Budget Income this Month: " + budget.calcTotalIncome());
+					budget.addIncometoBudgetValue();
+					System.out.println("Total Savings after This Month: " + budget.getValue());
+					System.out.println("-------------------------------------------------------");
 				}
 			}
 		}
