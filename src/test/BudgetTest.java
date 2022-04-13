@@ -85,6 +85,14 @@ public class BudgetTest {
 	}
 	
 	@Test
+	void testRemoveItemIsRemoved() {
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		budget1.addItem(item1);
+		budget1.removeItem(item1);
+		assertTrue(budget1.getItems().size()==0);
+	}
+	
+	@Test
 	void testRemoveFakeItem() {
 		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
 		assertFalse(budget1.removeItem(item1));
@@ -143,5 +151,34 @@ public class BudgetTest {
 	void testGetNullPriorities() {
 		ArrayList<BudgetItem> lowPrioItems = new ArrayList<BudgetItem>();
 		assertTrue(lowPrioItems.equals(budget1.getExpendableItems()));
+	}
+	
+	@Test
+	void testGetItemByName() {
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 50.00);
+		budget1.addItem(item1);
+		BudgetItem item1Copy = budget1.findItemByName("BudgetItem1");
+		assertTrue(item1Copy.equals(item1));
+	}
+	
+	@Test
+	void testGetItemByNameDoesNotExist() {
+		BudgetItem item1Copy = budget1.findItemByName("BudgetItem1");
+		assertTrue(item1Copy == null);
+	}
+	
+	@Test
+	void testRemoveItemByName() {
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		budget1.addItem(item1);
+		assertTrue(budget1.removeByName("BudgetItem1"));
+	}
+	
+	@Test
+	void testRemoveItemIsRemovedByName() {
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		budget1.addItem(item1);
+		budget1.removeByName("BudgetItem1");
+		assertTrue(budget1.getItems().size()==0);
 	}
 }

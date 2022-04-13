@@ -143,4 +143,23 @@ public class Budget {
 		}
 	}
 	
+	public BudgetItem findItemByName(String inputName) {
+		BudgetItem iterItem;
+		for (int i = 0; i < items.size(); i++) {
+			iterItem = items.get(i);
+			if(iterItem.getName() == inputName) {
+				return iterItem;
+			}
+		}
+		return null;
+	}
+	
+	public boolean removeByName(String inputName) {
+		BudgetItem namedItem = this.findItemByName(inputName);
+		if(namedItem == null) {
+			return false;
+		}
+		return this.removeItem(namedItem);
+	}
+	
 }
