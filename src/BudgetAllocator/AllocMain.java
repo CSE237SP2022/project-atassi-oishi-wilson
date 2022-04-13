@@ -60,8 +60,8 @@ public class AllocMain {
 			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i)));
 		}
 
+		boolean donePicking = false;
 		for (int i = 0; i < monthDuration; i++) {
-			boolean donePicking = false;
 			while (!donePicking) {
 				System.out.println("Would you like to add a budget item or income source? Select 1");
 				System.out.println("Would you like to remove a budget item? Select 2");
@@ -71,13 +71,33 @@ public class AllocMain {
 				if (!(choice >= 1 && choice <= 4)) {
 					System.out.println("Invalid Choice: Please enter again.");
 				} else if (choice == 1) { //add budget item
+					System.out.println("Please Input name of budget Item: ");
+					String newItemName = textScanner.nextLine();
+					System.out.println("Please input monthly cost of budget item: ");
+					double newItemCost = textScanner.nextInt();
+					budget.addItem(new BudgetItem(newItemName, newItemCost));
 
 				} else if (choice == 2) { //remove budget item
-
+					System.out.println("Please list name of budget item to remove: ");
+					String removedName = textScanner.nextLine();
+					ArrayList<BudgetItem> items = budget.getItems();
+					boolean isInList = false;
+					for(int k = 0; k < items.size(); k++) {
+						if(items.get(k).getName().equals(removedName)) {
+							isInList = true;
+							items.remove(k);
+						}
+					}
+					if(!isInList) {
+						System.out.println("No budget item with that name was located in list, please select option to try again.");
+					}
 				} else if (choice == 3) { //update income
+						System.out.println("What is your new monthly income?");
+						double newIncome = textScanner.nextInt();
+						budget.setIncome(newIncome);
 
 				} else { //proceed to next month
-
+					donePicking = true;
 				}
 			}
 		}

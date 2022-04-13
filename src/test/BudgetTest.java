@@ -18,7 +18,7 @@ public class BudgetTest {
 	
 	@BeforeEach
 	void setup() {
-		budget1 = new Budget("Budget1", 100.00);
+		budget1 = new Budget("Budget1", 100.00, 12, 8000);
 	}
 	
 	@Test
