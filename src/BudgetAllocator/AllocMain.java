@@ -5,6 +5,22 @@ import java.util.*;
 
 public class AllocMain {
 
+	public static boolean addBudgetItem(Budget budget, Scanner textScanner) {
+		System.out.println("Please Input name of budget Item: ");
+		String newItemName = textScanner.nextLine();
+		System.out.println("Please input monthly cost of budget item: ");
+		double newItemCost = Double.parseDouble(textScanner.nextLine());
+		return budget.addItem(new BudgetItem(newItemName, newItemCost));
+	}
+	
+	public static boolean addIncomeItem(Budget budget, Scanner textScanner) {
+		System.out.println("Please Input name of income Item: ");
+		String newItemName = textScanner.nextLine();
+		System.out.println("Please input monthly wage of income item: ");
+		double newItemCost = Double.parseDouble(textScanner.nextLine());
+		return budget.addItem(new IncomeItem(newItemName, newItemCost));
+	}
+	
 	public static void main(String[] args) {
 		boolean correctFile = false;
 
@@ -64,27 +80,21 @@ public class AllocMain {
 				System.out.println("Would you like to remove a budget item? Select 2");
 				System.out.println("Would you like to proceed to next month? Select 3");
 				int choice = textScanner.nextInt();
+				textScanner.nextLine();
 				if (!(choice >= 1 && choice <= 4)) {
 					System.out.println("Invalid Choice: Please enter again.");
 				} else if (choice == 1) { //add budget item
 					System.out.println("Would you like to add an income item or a budget item? Enter 'i' for income or 'b' for budget");
 					char incomeOrBudget = textScanner.next().charAt(0);
+					textScanner.nextLine();
 					while(incomeOrBudget != 'i' && incomeOrBudget != 'b') {
 						System.out.println("Please enter either 'i' for income item or 'b' for budget item");
 						incomeOrBudget = textScanner.next().charAt(0);
 					}
 					if(incomeOrBudget == 'i') { //choice between income or budget
-						System.out.println("Please Input name of income Item: ");
-						String newItemName = textScanner.nextLine();
-						System.out.println("Please input monthly wage of income item: ");
-						double newItemCost = textScanner.nextInt();
-						budget.addItem(new IncomeItem(newItemName, newItemCost));
+						addIncomeItem(budget, textScanner);
 					}else if(incomeOrBudget == 'b'){
-						System.out.println("Please Input name of budget Item: ");
-						String newItemName = textScanner.nextLine();
-						System.out.println("Please input monthly cost of budget item: ");
-						double newItemCost = textScanner.nextInt();
-						budget.addItem(new BudgetItem(newItemName, newItemCost));
+						addBudgetItem(budget, textScanner);
 					}
 				} else if (choice == 2) { //remove item
 					System.out.println("Please list name of item to remove: ");
