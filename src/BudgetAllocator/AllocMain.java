@@ -16,7 +16,7 @@ public class AllocMain {
 		int monthDuration = 0;
 		String name = "";
 		double initialSavings = 0;
-		double income = 0;
+		double income = 0 ;
 		ArrayList<String> itemNames = new ArrayList<String>();
 		ArrayList<Double> itemCosts = new ArrayList<Double>();
 		String fileName = textScanner.nextLine();
