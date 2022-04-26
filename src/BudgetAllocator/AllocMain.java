@@ -5,31 +5,6 @@ import java.util.*;
 
 public class AllocMain {
 
-	public static boolean addBudgetItem(Budget budget, Scanner textScanner) {
-		System.out.println("Please Input name of budget Item: ");
-		String newItemName = textScanner.nextLine();
-		System.out.println("Please input monthly cost of budget item: ");
-		double newItemCost = Double.parseDouble(textScanner.nextLine());
-		return budget.addItem(new BudgetItem(newItemName, newItemCost));
-	}
-	
-	public static boolean addIncomeItem(Budget budget, Scanner textScanner) {
-		System.out.println("Please Input name of income Item: ");
-		String newItemName = textScanner.nextLine();
-		System.out.println("Please input monthly wage of income item: ");
-		double newItemCost = Double.parseDouble(textScanner.nextLine());
-		return budget.addItem(new IncomeItem(newItemName, newItemCost));
-	}
-	
-	public static boolean removeItem(Budget budget, Scanner textScanner) {
-		System.out.println("Please list name of item to remove: ");
-		String removedName = textScanner.nextLine();
-		boolean result = budget.removeByName(removedName);
-		if(!result) {
-			System.out.println("No budget item with that name was located in list, please select option to try again.");
-		}
-		return result;
-	}
 	
 	public static void main(String[] args) {
 		boolean correctFile = false;
@@ -81,7 +56,8 @@ public class AllocMain {
 		for (int i = 0; i < itemNames.size(); i++) {
 			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i)));
 		}
-		
+		Menu menu = new Menu(budget, textScanner);
+
 		boolean donePicking = false;
 		for (int i = 0; i < monthDuration; i++) {
 			donePicking = false;
@@ -102,12 +78,12 @@ public class AllocMain {
 						incomeOrBudget = textScanner.next().charAt(0);
 					}
 					if(incomeOrBudget == 'i') { //choice between income or budget
-						addIncomeItem(budget, textScanner);
+						menu.addIncomeItem();
 					}else if(incomeOrBudget == 'b'){
-						addBudgetItem(budget, textScanner);
+						menu.addBudgetItem();
 					}
 				} else if (choice == 2) { //remove item
-					removeItem(budget, textScanner);
+					menu.removeItem();
 				} else { //proceed to next month and print current
 					donePicking = true;
 					System.out.println("------------------------Month " + (i + 1) + "------------------------");
