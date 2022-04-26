@@ -34,7 +34,7 @@ public class Menu {
 		String newItemName = textScanner.nextLine();
 		System.out.println("Please input monthly wage of income item: ");
 		double newItemCost = Double.parseDouble(textScanner.nextLine());
-		budget.addItem(new IncomeItem(newItemName, newItemCost));
+		budget.addItem(new BudgetItem(newItemName, -newItemCost, true));
 		return;
 	}
 	
@@ -46,6 +46,25 @@ public class Menu {
 			System.out.println("No budget item with that name was located in list, please select option to try again.");
 		}
 		return;
+	}
+	
+	public void printInterface(int month) {
+		System.out.println("------------------------Month " + (month + 1) + "------------------------");
+		for(int j = 0; j < budget.getItems().size(); j++) {
+			budget.getItems().get(j).updateCostOverTime();
+			if(!budget.getItems().get(j).isIncomeItem()){
+				System.out.println("Budget Item:   " + budget.getItems().get(j).getName() + ": Cost = " + budget.getItems().get(j).getValue() + "   "
+						+ "Total Cost from This: " + (budget.getItems().get(j).getItemCostOverTime()));
+			} else {
+				System.out.println("Income Item:   " + budget.getItems().get(j).getName() + ": Wage = " + budget.getItems().get(j).getValue() + "   "
+						+ "Total Income from This: " + (budget.getItems().get(j).getItemCostOverTime()));
+			}
+		} 
+		System.out.println("Total Budget Cost this Month: " + budget.calcTotalCost());
+		System.out.println("Total Budget Income this Month: " + budget.calcTotalIncome());
+		budget.changeBudget();
+		System.out.println("Total Savings after This Month: " + budget.getValue());
+		System.out.println("-------------------------------------------------------");
 	}
 	
 }

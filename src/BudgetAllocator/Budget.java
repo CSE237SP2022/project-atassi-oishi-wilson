@@ -70,7 +70,7 @@ public class Budget {
 				totalIncome += items.get(i).getValue();
 			}
 		}
-		return totalIncome;
+		return (totalIncome);
 	}
 	
 	public double getRemainingValue() {
@@ -134,11 +134,13 @@ public class Budget {
 		return lowPrioItems;
 	}
 	
-	public void addIncometoBudgetValue() {
+	public void changeBudget() {
 		budgetValue += income;
 		for(int i = 0; i < items.size(); i++) {
 			if(items.get(i).isIncomeItem()) {
 				budgetValue += items.get(i).getValue();
+			} else {
+				budgetValue -= items.get(i).getValue();
 			}
 		}
 	}

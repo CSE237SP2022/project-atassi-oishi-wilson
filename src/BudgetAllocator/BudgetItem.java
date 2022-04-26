@@ -6,12 +6,22 @@ public class BudgetItem {
 	private double itemValue;
 	private double itemCostOverTime;
 	private int itemPriority;
+	private boolean isIncome;
 	
 	public BudgetItem(String name, double value) {
 		itemName = name;
 		itemValue = value;
 		itemCostOverTime = 0;
 		itemPriority = 0;
+		isIncome = false;
+	}
+	
+	public BudgetItem(String name, double value, boolean isIncome) {
+		itemName = name;
+		itemValue = value;
+		itemCostOverTime = 0;
+		itemPriority = 0;
+		this.isIncome = isIncome;
 	}
 	
 	public String getName() {
@@ -19,11 +29,14 @@ public class BudgetItem {
 	}
 	
 	public double getValue() {
+		if(isIncome) {
+			return -itemValue;
+		}
 		return itemValue;
 	}
 	
 	public boolean isIncomeItem() {
-		return false;
+		return isIncome;
 	}
 	
 	public double getItemCostOverTime() {
@@ -31,7 +44,11 @@ public class BudgetItem {
 	}
 	
 	public void updateCostOverTime() {
-		itemCostOverTime += itemValue;
+		if(isIncome) {
+			itemCostOverTime -= itemValue;
+		} else {
+			itemCostOverTime += itemValue;
+		}
 	}
 
 	public int getPriority() {

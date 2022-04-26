@@ -10,8 +10,6 @@ public class AllocMain {
 		boolean correctFile = false;
 
 		Scanner textScanner = new Scanner(System.in);
-
-		System.out.println("Please input your exact txt file name that is in this directory: ");
 		Scanner txtParser;
 		int whichLine = 0;
 		int monthDuration = 0;
@@ -20,38 +18,42 @@ public class AllocMain {
 		double income = 0 ;
 		ArrayList<String> itemNames = new ArrayList<String>();
 		ArrayList<Double> itemCosts = new ArrayList<Double>();
-		String fileName = textScanner.nextLine();
-		//System.out.println(fileName+".txt");
-		try {
-			File directory = new File("./" + fileName + ".txt");
-			//txtParser = new Scanner(new File("/Users/ferrisatassi/Desktop/project-atassi-oishi-wilson/src/BudgetAllocator/TestFile.txt"));
-			txtParser = new Scanner(directory);
-			correctFile = true;
-			// CSVParser.useDelimiter(",");
-			while (txtParser.hasNext()) {
-				switch (whichLine) {
-				case 0:
-					monthDuration = txtParser.nextInt();
-					whichLine++;
-					break;
-				case 1:
-					name = txtParser.next();
-					initialSavings = Double.parseDouble(txtParser.next());
-					income = Double.parseDouble(txtParser.next());
-					whichLine++;
-					break;
-				case 2:
-					String itemName = txtParser.next();
-					double value = Double.parseDouble(txtParser.next());
-					itemNames.add(itemName);
-					itemCosts.add(value);
-					break;
+		while(!correctFile) {
+			try {
+				
+				System.out.println("Please input your exact txt file name that is in this directory: ");
+				String fileName = textScanner.nextLine();
+				fileName = "../" + fileName + ".txt";
+				File directory = new File(fileName);
+				txtParser = new Scanner(directory);
+				//txtParser = new Scanner(new File("/Users/ferrisatassi/Desktop/project-atassi-oishi-wilson/src/BudgetAllocator/TestFile.txt"));
+				while (txtParser.hasNext()) {
+					switch (whichLine) {
+					case 0:
+						monthDuration = txtParser.nextInt();
+						whichLine++;
+						break;
+					case 1:
+						name = txtParser.next();
+						initialSavings = Double.parseDouble(txtParser.next());
+						income = Double.parseDouble(txtParser.next());
+						whichLine++;
+						break;
+					case 2:
+						String itemName = txtParser.next();
+						double value = Double.parseDouble(txtParser.next());
+						itemNames.add(itemName);
+						itemCosts.add(value);
+						break;
+					}
 				}
+				txtParser.close();
+				correctFile = true;
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found, please enter again.");
 			}
-			txtParser.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found, please enter again.");
 		}
+		
 		Budget budget = new Budget(name, initialSavings, monthDuration, income);
 		for (int i = 0; i < itemNames.size(); i++) {
 			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i)));
@@ -86,22 +88,7 @@ public class AllocMain {
 					menu.removeItem();
 				} else { //proceed to next month and print current
 					donePicking = true;
-					System.out.println("------------------------Month " + (i + 1) + "------------------------");
-					for(int j = 0; j < budget.getItems().size(); j++) {
-						budget.getItems().get(j).updateCostOverTime();
-						if(!budget.getItems().get(j).isIncomeItem()){
-							System.out.println("Budget Item:   " + budget.getItems().get(j).getName() + ": Cost = " + budget.getItems().get(j).getValue() + "   "
-									+ "Total Cost from This: " + (budget.getItems().get(j).getItemCostOverTime()));
-						} else {
-							System.out.println("Income Item:   " + budget.getItems().get(j).getName() + ": Cost = " + budget.getItems().get(j).getValue() + "   "
-									+ "Total Income from This: " + (budget.getItems().get(j).getItemCostOverTime()));
-						}
-					} 
-					System.out.println("Total Budget Cost this Month: " + budget.calcTotalCost());
-					System.out.println("Total Budget Income this Month: " + budget.calcTotalIncome());
-					budget.addIncometoBudgetValue();
-					System.out.println("Total Savings after This Month: " + budget.getValue());
-					System.out.println("-------------------------------------------------------");
+					menu.printInterface(i);
 				}
 			}
 		}
