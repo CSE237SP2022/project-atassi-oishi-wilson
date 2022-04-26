@@ -8,7 +8,7 @@ public class Budget {
 	private String budgetName;
 	private double budgetValue;
 	private ArrayList<BudgetItem> items = new ArrayList<BudgetItem>();
-	private double totalCost;
+	private double totalCost; 
 	private int months;
 	private double income;
 	
