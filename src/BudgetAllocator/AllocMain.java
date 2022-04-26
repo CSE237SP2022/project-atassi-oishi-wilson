@@ -23,8 +23,11 @@ public class AllocMain {
 				
 				System.out.println("Please input your exact txt file name that is in this directory: ");
 				String fileName = textScanner.nextLine();
-				fileName = "../" + fileName + ".txt";
+				//fileName = "../" + fileName + ".txt";
+				fileName = fileName + ".txt";
+				//System.out.println(new File("").getAbsolutePath());
 				File directory = new File(fileName);
+				//System.out.println(directory.getAbsolutePath());
 				txtParser = new Scanner(directory);
 				//txtParser = new Scanner(new File("/Users/ferrisatassi/Desktop/project-atassi-oishi-wilson/src/BudgetAllocator/TestFile.txt"));
 				while (txtParser.hasNext()) {
@@ -60,6 +63,8 @@ public class AllocMain {
 		}
 		Menu menu = new Menu(budget, textScanner);
 
+		boolean userQuit = false;
+		
 		boolean donePicking = false;
 		for (int i = 0; i < monthDuration; i++) {
 			donePicking = false;
@@ -67,7 +72,13 @@ public class AllocMain {
 				System.out.println("Would you like to add a budget item or income source? Select 1");
 				System.out.println("Would you like to remove a budget item? Select 2");
 				System.out.println("Would you like to proceed to next month? Select 3");
-				int choice = textScanner.nextInt();
+				System.out.println("If you would like to quit the program, type 'q'");
+				String testQuit = textScanner.nextLine();
+				if(testQuit.equals("q")) {
+					userQuit = true;
+					break;
+				}
+				int choice = Integer.parseInt(testQuit);
 				textScanner.nextLine();
 				if (!(choice >= 1 && choice <= 4)) {
 					System.out.println("Invalid Choice: Please enter again.");
@@ -91,7 +102,10 @@ public class AllocMain {
 					menu.printInterface(i);
 				}
 			}
+			if(userQuit) {
+				break;
+			}
 		}
-
+		System.out.println("Thank you for using our Budget Allocator!");
 	}
 }
