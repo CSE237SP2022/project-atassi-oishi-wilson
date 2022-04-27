@@ -4,8 +4,9 @@ project-atassi-oishi-wilson created by GitHub Classroom
 Budget Allocator 
 Ferris Atassi, Jasper Wilson, Benn Oishi
 
-In this iteration, we made it possible to add, remove, and print budget items from a test file. We attempted to display the budget information in a way that is easily read and understandable.
-We intend to add functionality for income in the next iteration. As of now, only budget items are able to be modified. The IncomeItem objects are able to be created, but are not functional as of yet other than simply being flat money being added to the user's savings each month. We plan to take into account the user stories based on economic volatility and people who might have a different amount of income each month as our present application works under the impression that the user has stable monthly income.
+In this iteration, we focused on fleshing out the functionality of our application along with adding more complexity to what we already have. We fixed income items to be represenstations of negative budget items. We refactored much of our code to follow the guidelines mentioned in class and also made sure to get rid of anything that should not be staged in our git repository. We added a feature taking into account priorities for specific budget items to enable user customization when they go over budget and need to remove an item. Our project now correctly does removal, so users are fully able to edit their budget month by month. Also worked on the user story regarding not having everything in main as we refactored it into a new class called menu to make main consist of more method calls than raw code. 
+
+To run code, open project cd into src and run "sh ./script.sh".
 
 Instructions to run: Go into parent directory of project, (where src and budget allocator), and type java BudgetAllocator/AllocMain, for the inputted file name type "TestFile" exactly or it will not work.
 
