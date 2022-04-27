@@ -29,8 +29,6 @@ public class AllocMain {
 		Menu menu = new Menu(budget, textScanner);
 
 		boolean userQuit = false;
-		
-		boolean donePicking = false;
 		for (int i = 0; i < monthDuration; i++) {
 			userQuit = !menu.singleMonthIterationContinue(i);
 			if(userQuit) {
@@ -51,13 +49,9 @@ public class AllocMain {
 				
 				System.out.println("Please input your exact txt file name that is in this directory: ");
 				String fileName = textScanner.nextLine();
-				//fileName = "../" + fileName + ".txt";
 				fileName = fileName + ".txt";
-				//System.out.println(new File("").getAbsolutePath());
 				File directory = new File(fileName);
-				//System.out.println(directory.getAbsolutePath());
 				txtParser = new Scanner(directory);
-				//txtParser = new Scanner(new File("/Users/ferrisatassi/Desktop/project-atassi-oishi-wilson/src/BudgetAllocator/TestFile.txt"));
 				while (txtParser.hasNext()) {
 					switch (whichLine) {
 					case 0:
