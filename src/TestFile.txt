@@ -1,8 +1,8 @@
 12
 Budget2022 5000
 8000
-item1 100
-item2 300
-item3 150
-item4 100
-item5 50
+item1 100 2
+item2 300 2
+item3 150 3
+item4 100 0 
+item5 50 1

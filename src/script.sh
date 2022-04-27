@@ -1,4 +1,4 @@
 !#/bin/bash
 
-javac BudgetAllocator.AllocMain.java
-java BudgetAllocator.AllocMain
+javac BudgetAllocator/AllocMain.java
+java BudgetAllocator/AllocMain
