@@ -1,5 +1,6 @@
 package BudgetAllocator;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -25,7 +26,36 @@ public class Menu {
 		String newItemName = textScanner.nextLine();
 		System.out.println("Please input monthly cost of budget item: ");
 		double newItemCost = Double.parseDouble(textScanner.nextLine());
-		budget.addItem(new BudgetItem(newItemName, newItemCost));
+		System.out.println("Please input a priority (priority of 0 has the least likelihood of removal from the budget): ");
+		int newPrioValue = textScanner.nextInt();
+		while(budget.calcTotalCost() + newItemCost > budget.getValue()) {
+			System.out.println("Your savings are now: " + budget.getValue() + ". Your total budget cost is: " + (budget.calcTotalCost() + newItemCost) + ". You are over budget by: " + Math.abs(budget.getValue() - (budget.calcTotalCost() + newItemCost)) + ".");
+			System.out.println("Your budget has been exceeded with the addition of this item. Would you like to remove one of your lowest priority items? y/n");
+			String input = textScanner.nextLine();
+			if(input.equals("y") || input.equals("yes")) {
+				ArrayList<BudgetItem> lowPrioItems = budget.getExpendableItems();
+				ArrayList<String> lowPrioNames = new ArrayList<String>();
+				for(BudgetItem lowPrioItem : lowPrioItems) {
+					System.out.println(lowPrioItem.getName());
+					lowPrioNames.add(lowPrioItem.getName());
+				}
+				System.out.println("Please type the name of the item you would like to remove from this low priority list: ");
+				boolean correctName = false;
+				while(!correctName) {
+					input = textScanner.nextLine();
+					if(lowPrioNames.contains(input)) {
+						correctName = true;
+					}
+				}
+				
+				budget.removeByName(input);
+				
+				budget.addItem(new BudgetItem(newItemName, newItemCost, newPrioValue));
+				System.out.println("Item removed!");
+			}else if(input.equals("n") || input.equals("no")) {
+				System.out.println("The item was not added.");
+			}
+		}
 		return;
 	} 
 	

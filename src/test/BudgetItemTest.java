@@ -13,7 +13,7 @@ public class BudgetItemTest {
 		
 		@BeforeEach
 		void setup() {
-			item = new BudgetItem("BudgetItem1", 10.00);
+			item = new BudgetItem("BudgetItem1", 10.00, 0);
 		}
 	
 		@Test
@@ -39,7 +39,7 @@ public class BudgetItemTest {
 		
 		@Test
 		void testEquals() {
-			BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00);
+			BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00, 0);
 			assertTrue(item.equals(item2));
 		}
 		

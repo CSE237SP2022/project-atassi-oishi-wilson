@@ -8,10 +8,10 @@ public class Budget {
 	private String budgetName;
 	private double budgetValue;
 	private ArrayList<BudgetItem> items = new ArrayList<BudgetItem>();
-	private double totalCost; 
+	private double totalCost;
 	private int months;
 	private double income;
-	
+
 	public Budget(String name, double value, int months, double income) {
 		budgetName = name;
 		budgetValue = value;
@@ -23,63 +23,63 @@ public class Budget {
 	public String getName() {
 		return budgetName;
 	}
-	
+
 	public int getMonths() {
 		return months;
 	}
-	
-	public ArrayList<BudgetItem> getItems(){
+
+	public ArrayList<BudgetItem> getItems() {
 		return items;
 	}
-	
+
 	public double getValue() {
 		return budgetValue;
 	}
-	
+
 	public double getTotalCost() {
 		return totalCost;
 	}
-	
+
 	public void updateIncome(double income) {
 		this.income += income;
 	}
-	
+
 	public boolean addItem(BudgetItem item) {
-		if(this.checkForDuplicates(item)) {
+		if (this.checkForDuplicates(item)) {
 			return false;
 		}
 		items.add(item);
 		totalCost = calcTotalCost();
 		return true;
 	}
-	
+
 	public double calcTotalCost() {
 		double totalValue = 0;
 		for (int i = 0; i < items.size(); i++) {
-			if(!items.get(i).isIncomeItem()) {
+			if (!items.get(i).isIncomeItem()) {
 				totalValue += items.get(i).getValue();
 			}
 		}
 		return totalValue;
 	}
-	
+
 	public double calcTotalIncome() {
 		double totalIncome = income;
 		for (int i = 0; i < items.size(); i++) {
-			if(items.get(i).isIncomeItem()) {
+			if (items.get(i).isIncomeItem()) {
 				totalIncome += items.get(i).getValue();
 			}
 		}
 		return (totalIncome);
 	}
-	
+
 	public double getRemainingValue() {
 		return budgetValue - totalCost;
 	}
-	
+
 	public boolean checkForDuplicates(BudgetItem item) {
 		for (int i = 0; i < items.size(); i++) {
-			if(items.get(i).equals(item)) {
+			if (items.get(i).equals(item)) {
 				return true;
 			}
 		}
@@ -87,8 +87,9 @@ public class Budget {
 	}
 
 	public boolean removeItem(BudgetItem item) {
+		System.out.println("removeItem is called with: " + item.getName());
 		for (int i = 0; i < items.size(); i++) {
-			if(items.get(i).equals(item)) {
+			if (items.get(i).equals(item)) {
 				items.remove(i);
 				totalCost = calcTotalCost();
 				return true;
@@ -100,17 +101,17 @@ public class Budget {
 	public BudgetItem getExpendableItem() {
 		ArrayList<BudgetItem> lowPrioItems = this.getExpendableItems();
 
-		if(lowPrioItems.size() == 0) {
+		if (lowPrioItems.size() == 0) {
 			return null;
 		}
 		BudgetItem worstItem = lowPrioItems.get(0);
 		BudgetItem iterItem;
 		for (int i = 0; i < lowPrioItems.size(); i++) {
 			iterItem = lowPrioItems.get(i);
-			if(iterItem.getValue() > worstItem.getValue()) {
+			if (iterItem.getValue() > worstItem.getValue()) {
 				worstItem = iterItem;
 			}
-			
+
 		}
 		return worstItem;
 	}
@@ -121,47 +122,48 @@ public class Budget {
 		int lowestPriority = -1;
 		for (int i = 0; i < items.size(); i++) {
 			iterItem = items.get(i);
-			if(iterItem.getPriority() > lowestPriority) {
-				lowestPriority = iterItem.getPriority();
-				lowPrioItems.clear();
-				lowPrioItems.add(iterItem);
+			if (!iterItem.isIncomeItem()) {
+				if (iterItem.getPriority() > lowestPriority) {
+					lowestPriority = iterItem.getPriority();
+					lowPrioItems.clear();
+					lowPrioItems.add(iterItem);
+				} else if (iterItem.getPriority() == lowestPriority) {
+					lowPrioItems.add(iterItem);
+				}
 			}
-			else if(iterItem.getPriority() == lowestPriority) {
-				lowPrioItems.add(iterItem);
-			}
-			
 		}
 		return lowPrioItems;
 	}
-	
+
 	public void changeBudget() {
 		budgetValue += income;
-		for(int i = 0; i < items.size(); i++) {
-			if(items.get(i).isIncomeItem()) {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).isIncomeItem()) {
 				budgetValue += items.get(i).getValue();
 			} else {
 				budgetValue -= items.get(i).getValue();
 			}
 		}
 	}
-	
+
 	public BudgetItem findItemByName(String inputName) {
 		BudgetItem iterItem;
 		for (int i = 0; i < items.size(); i++) {
 			iterItem = items.get(i);
-			if(iterItem.getName() == inputName) {
+			if (iterItem.getName().equals(inputName)) {
 				return iterItem;
 			}
 		}
 		return null;
 	}
-	
+
 	public boolean removeByName(String inputName) {
 		BudgetItem namedItem = this.findItemByName(inputName);
-		if(namedItem == null) {
+		if (namedItem == null) {
 			return false;
 		}
+		System.out.println("Calling removeItem with: " + namedItem.getName());
 		return this.removeItem(namedItem);
 	}
-	
+
 }

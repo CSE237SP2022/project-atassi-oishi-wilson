@@ -8,11 +8,11 @@ public class BudgetItem {
 	private int itemPriority;
 	private boolean isIncome;
 	
-	public BudgetItem(String name, double value) {
+	public BudgetItem(String name, double value, int prio) {
 		itemName = name;
 		itemValue = value;
 		itemCostOverTime = 0;
-		itemPriority = 0;
+		itemPriority = prio;
 		isIncome = false;
 	}
 	
