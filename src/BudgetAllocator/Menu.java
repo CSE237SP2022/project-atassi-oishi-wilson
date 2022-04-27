@@ -20,6 +20,60 @@ public class Menu {
 		this.budget = budget;
 	}
 	
+	public boolean singleMonthIterationContinue(int month) {
+		boolean doneWithMonth = false;
+		while (!doneWithMonth) {
+			int choiceResult = this.pickItem(month);
+			switch(choiceResult) {
+				case 1:
+					return true;
+				case 2:
+					return false;
+				default:
+					break;
+			}
+		}
+		return false;
+	}
+	
+	public int pickItem(int month) {
+		System.out.println("Would you like to add a budget item or income source? Select 1");
+		System.out.println("Would you like to remove a budget item? Select 2");
+		System.out.println("Would you like to proceed to next month? Select 3");
+		System.out.println("Would you like to quit the program? Select 4");
+		
+		String userInput = textScanner.nextLine();
+		
+		int choice = Integer.parseInt(userInput);
+		switch (choice) {
+			case 1:	
+				System.out.println("Would you like to add an income item or a budget item? Enter 'i' for income or 'b' for budget");
+				char incomeOrBudget = textScanner.next().charAt(0);
+				textScanner.nextLine();
+				while(incomeOrBudget != 'i' && incomeOrBudget != 'b') {
+					System.out.println("Please enter either 'i' for income item or 'b' for budget item");
+					incomeOrBudget = textScanner.next().charAt(0);
+				}
+				if(incomeOrBudget == 'i') { //choice between income or budget
+					this.addIncomeItem();
+				}else if(incomeOrBudget == 'b'){
+					this.addBudgetItem();
+				}
+				return 0;
+			case 2:
+				this.removeItem();
+				return 0;
+			case 3:
+				this.printInterface(month);
+				return 1;
+			case 4:
+				return 2;
+			default: 
+				System.out.println("Invalid Choice: Please enter again.");
+				return 0;
+		}
+	}
+	
 	
 	public void addBudgetItem() {
 		System.out.println("Please Input name of budget Item: ");
@@ -27,7 +81,7 @@ public class Menu {
 		System.out.println("Please input monthly cost of budget item: ");
 		double newItemCost = Double.parseDouble(textScanner.nextLine());
 		System.out.println("Please input a priority (priority of 0 has the least likelihood of removal from the budget): ");
-		int newPrioValue = textScanner.nextInt();
+		int newPrioValue = Integer.parseInt(textScanner.nextLine());
 		while(budget.calcTotalCost() + newItemCost > budget.getValue()) {
 			System.out.println("Your savings are now: " + budget.getValue() + ". Your total budget cost is: " + (budget.calcTotalCost() + newItemCost) + ". You are over budget by: " + Math.abs(budget.getValue() - (budget.calcTotalCost() + newItemCost)) + ".");
 			System.out.println("Your budget has been exceeded with the addition of this item. Would you like to remove one of your lowest priority items? y/n");
@@ -50,12 +104,12 @@ public class Menu {
 				
 				budget.removeByName(input);
 				
-				budget.addItem(new BudgetItem(newItemName, newItemCost, newPrioValue));
-				System.out.println("Item removed!");
+								System.out.println("Item removed!");
 			}else if(input.equals("n") || input.equals("no")) {
 				System.out.println("The item was not added.");
 			}
 		}
+		budget.addItem(new BudgetItem(newItemName, newItemCost, newPrioValue));
 		return;
 	} 
 	
