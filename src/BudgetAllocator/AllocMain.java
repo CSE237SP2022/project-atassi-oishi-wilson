@@ -12,6 +12,7 @@ public class AllocMain {
 	
 	static ArrayList<String> itemNames = new ArrayList<String>();
 	static ArrayList<Double> itemCosts = new ArrayList<Double>();
+	static ArrayList<Integer> itemPrios = new ArrayList<Integer>();
 	
 	public static void main(String[] args) {
 		
@@ -21,7 +22,7 @@ public class AllocMain {
 		
 		Budget budget = new Budget(name, initialSavings, monthDuration, income);
 		for (int i = 0; i < itemNames.size(); i++) {
-			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i)));
+			budget.addItem(new BudgetItem(itemNames.get(i), itemCosts.get(i), itemPrios.get(i)));
 		}
 		Menu menu = new Menu(budget, textScanner);
 
@@ -104,8 +105,10 @@ public class AllocMain {
 					case 2:
 						String itemName = txtParser.next();
 						double value = Double.parseDouble(txtParser.next());
+						int prio = Integer.parseInt(txtParser.next());
 						itemNames.add(itemName);
 						itemCosts.add(value);
+						itemPrios.add(prio);
 						break;
 					}
 				}

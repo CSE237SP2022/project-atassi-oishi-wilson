@@ -33,20 +33,20 @@ public class BudgetTest {
 	
 	@Test
 	void testNewItem() {
-		BudgetItem item = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item = new BudgetItem("BudgetItem1", 10.00, 0);
 		assertTrue(budget1.addItem(item));
 	}
 	
 	@Test
 	void testNewItemTotalCost() {
-		BudgetItem item = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item);
 		assertEquals(10, budget1.getTotalCost(), .05);
 	}
 	
 	@Test
 	void testNewItemRemainingValue() {
-		BudgetItem item = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item);
 		assertEquals(90, budget1.getRemainingValue(), .05);
 	}
@@ -54,24 +54,24 @@ public class BudgetTest {
 	
 	@Test
 	void testNoDuplicate() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00, 0);
 		budget1.addItem(item1);
 		assertTrue(budget1.addItem(item2));
 	}
 	
 	@Test
 	void testDuplicate() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		assertFalse(budget1.addItem(item2));
 	}
 	
 	@Test
 	void testDuplicateTotalCost() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		budget1.addItem(item2);
 		assertEquals(10, budget1.getTotalCost(), .05);
@@ -79,14 +79,14 @@ public class BudgetTest {
 	
 	@Test
 	void testRemoveItem() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		assertTrue(budget1.removeItem(item1));
 	}
 	
 	@Test
 	void testRemoveItemIsRemoved() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		budget1.removeItem(item1);
 		assertTrue(budget1.getItems().size()==0);
@@ -94,15 +94,15 @@ public class BudgetTest {
 	
 	@Test
 	void testRemoveFakeItem() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
 		assertFalse(budget1.removeItem(item1));
 	}
 	
 	@Test
 	void testGetLowestPriority() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00);
-		BudgetItem item3 = new BudgetItem("BudgetItem3", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00, 0);
+		BudgetItem item3 = new BudgetItem("BudgetItem3", 10.00, 0);
 		item1.setPriority(0);
 		item2.setPriority(1);
 		item3.setPriority(2);
@@ -113,9 +113,9 @@ public class BudgetTest {
 	}
 	
 	void testGetLowestPriorityByValue() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 50.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00);
-		BudgetItem item3 = new BudgetItem("BudgetItem3", 20.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 50.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00, 0);
+		BudgetItem item3 = new BudgetItem("BudgetItem3", 20.00, 0);
 		item1.setPriority(0);
 		item2.setPriority(1);
 		item3.setPriority(1);
@@ -132,9 +132,9 @@ public class BudgetTest {
 	
 	@Test
 	void testGetLowestPriorities() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
-		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00);
-		BudgetItem item3 = new BudgetItem("BudgetItem3", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
+		BudgetItem item2 = new BudgetItem("BudgetItem2", 10.00, 0);
+		BudgetItem item3 = new BudgetItem("BudgetItem3", 10.00, 0);
 		item1.setPriority(0);
 		item2.setPriority(1);
 		item3.setPriority(1);
@@ -155,7 +155,7 @@ public class BudgetTest {
 	
 	@Test
 	void testGetItemByName() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 50.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 50.00, 0);
 		budget1.addItem(item1);
 		BudgetItem item1Copy = budget1.findItemByName("BudgetItem1");
 		assertTrue(item1Copy.equals(item1));
@@ -169,14 +169,14 @@ public class BudgetTest {
 	
 	@Test
 	void testRemoveItemByName() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		assertTrue(budget1.removeByName("BudgetItem1"));
 	}
 	
 	@Test
 	void testRemoveItemIsRemovedByName() {
-		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00);
+		BudgetItem item1 = new BudgetItem("BudgetItem1", 10.00, 0);
 		budget1.addItem(item1);
 		budget1.removeByName("BudgetItem1");
 		assertTrue(budget1.getItems().size()==0);
