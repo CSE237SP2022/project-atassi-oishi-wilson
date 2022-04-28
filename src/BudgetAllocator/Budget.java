@@ -123,16 +123,20 @@ public class Budget {
 		for (int i = 0; i < items.size(); i++) {
 			iterItem = items.get(i);
 			if (!iterItem.isIncomeItem()) {
-				if (iterItem.getPriority() > lowestPriority) {
-					lowestPriority = iterItem.getPriority();
-					lowPrioItems.clear();
-					lowPrioItems.add(iterItem);
-				} else if (iterItem.getPriority() == lowestPriority) {
-					lowPrioItems.add(iterItem);
-				}
+				addToLowPrioItems(lowestPriority, iterItem, lowPrioItems);
 			}
 		}
 		return lowPrioItems;
+	}
+	
+	public void addToLowPrioItems(int lowestPriority, BudgetItem iterItem, ArrayList<BudgetItem> lowPrioItems) {
+		if (iterItem.getPriority() > lowestPriority) {
+			lowestPriority = iterItem.getPriority();
+			lowPrioItems.clear();
+			lowPrioItems.add(iterItem);
+		} else if (iterItem.getPriority() == lowestPriority) {
+			lowPrioItems.add(iterItem);
+		}
 	}
 
 	public void changeBudget() {
